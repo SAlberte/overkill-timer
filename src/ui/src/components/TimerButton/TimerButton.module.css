@@ -1,0 +1,19 @@
+.TimerButton {
+    background-color: rgb(245, 240, 187);;
+    color: rgb(115, 169, 173);
+    width: 100%;
+    font-size: xx-large;
+    font-weight: bolder;
+    text-align: center;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 6px rgb(16, 0, 51);
+    margin-top: 25px;
+    margin-bottom: 5px;
+}
+
+
+.TimerButton:hover {
+    background-color: rgb(196, 223, 170);
+    color: rgb(115, 169, 173);
+}
