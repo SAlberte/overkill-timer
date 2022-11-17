@@ -1,12 +1,11 @@
-from celery_tasks import divide
+from src.celery_.celery_worker import arduino_timer_task
 import celery.result
-from enum import Enum
 
 
 class TimerController:
 
     def __init__(self):
-        self.sig = divide.s(1, 2)
+        self.sig = arduino_timer_task.s()
         self.task: None | celery.result.AsyncResult = None
 
     def handle_timer(self, command: str):
