@@ -7,4 +7,4 @@ This display is controlled by a microcontroller.
 The microcontroller is controlled by the backend of the
 web application, which in turn is controlled from the frontend.
 
-<img src="https://github.com/SAlberte/overkill-timer/blob/main/imgs/timer.png" width="300" height="608"/>
+<img src="https://github.com/SAlberte/overkill-timer/blob/main/imgs/timer.png"/>
