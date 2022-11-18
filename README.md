@@ -2,8 +2,9 @@
 
 ## Overview
 
-This is timer that is displayed on tft display.
-This display is controlled by microcontroller.
-Microcontroller is controlled by web application
-through backend service.
+This is a timer that displays the time on a TFT display.
+This display is controlled by a microcontroller.
+The microcontroller is controlled by the backend of the
+web application, which in turn is controlled from the frontend.
 
+<img src="https://github.com/SAlberte/overkill-timer/blob/master/imgs/timer.png" width="300" height="608"/>
