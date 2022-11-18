@@ -5,3 +5,4 @@ __pycache__/
 _trial_temp/
 .cache/
 *.log
+/src/data/time.txt
