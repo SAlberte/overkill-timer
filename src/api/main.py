@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from src.controllers.timer_controller import TimerController
-from src.api.models.timer_command import TimerCommand
+from controllers.timer_controller import TimerController
+from models.timer_command import TimerCommand
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()

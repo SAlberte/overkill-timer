@@ -1,13 +1,19 @@
 from celery import Celery
-from src.celery_.arduino.arduino_controller import ArduinoController
+from arduino_utils.arduino_controller import ArduinoController
 import time
 
 
 celery_app = Celery(
     "celery_worker",
-    broker="redis://127.0.0.1:6379/0",
-    backend="redis://127.0.0.1:6379/0"
+    broker="redis://redis:6379/0",
+    backend="redis://redis:6379/0"
 )
+
+
+TIMEDATA_URI = "/data/time.txt"
+ARDUINO_BAUDRATE = 9600
+ARDUINO_PORT = "/dev/ttyACM0"
+ARDUINO_TIMEOUT = 0.1
 
 
 def format_time(time_ms: int) -> [int, int, int]:
@@ -25,16 +31,20 @@ def format_time(time_ms: int) -> [int, int, int]:
 
 @celery_app.task
 def arduino_timer_task():
-    arduino = ArduinoController()
+    arduino = ArduinoController(
+        baudrate=ARDUINO_BAUDRATE,
+        port=ARDUINO_PORT,
+        timeout=ARDUINO_TIMEOUT
+    )
     min_timer_time = 1000
     loop_time = 1
-    with open("src/data/time.txt", "r+") as f:
+    with open(TIMEDATA_URI, "r+") as f:
         time_ms = int(f.read())
     seconds, minutes, hours = format_time(time_ms)
     arduino.write(f"{hours}:{minutes}:{seconds}\n")
     time.sleep(loop_time)
     while time_ms >= min_timer_time:
-        with open("src/data/time.txt", "r+") as f:
+        with open(TIMEDATA_URI, "r+") as f:
             time_ms = int(f.read())-min_timer_time
             seconds, minutes, hours = format_time(time_ms)
             f.seek(0)

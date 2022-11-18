@@ -1,4 +1,4 @@
-from src.celery_.celery_worker import arduino_timer_task
+from celery_worker import arduino_timer_task
 import celery.result
 
 
