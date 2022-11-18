@@ -2,7 +2,7 @@ from serial import Serial
 
 
 class ArduinoController:
-    def __init__(self, port="/dev/ttyACM0", baudrate=9600, timeout=0.1):
+    def __init__(self, port, baudrate, timeout):
         self.arduino = Serial(
             port=port,
             baudrate=baudrate,

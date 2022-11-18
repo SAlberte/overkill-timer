@@ -1,6 +1,7 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Body
 from controllers.timer_controller import TimerController
 from models.timer_command import TimerCommand
+from models.timer_time import TimerTime
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -26,5 +27,10 @@ def timer(timer_command: TimerCommand):
     timer_controller.handle_timer(timer_command.command)
 
 
+@app.post("/timer/time")
+def timer(timer_time: TimerTime):
+    timer_controller.set_time(hours=timer_time.hours,
+                              minutes=timer_time.minutes,
+                              seconds=timer_time.seconds)
 
 

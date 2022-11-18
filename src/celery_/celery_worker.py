@@ -53,3 +53,16 @@ def arduino_timer_task():
             f.truncate()
         time.sleep(loop_time)
 
+
+@celery_app.task
+def arduino_set_time_task(hours, minutes, seconds):
+    arduino = ArduinoController(
+        baudrate=ARDUINO_BAUDRATE,
+        port=ARDUINO_PORT,
+        timeout=ARDUINO_TIMEOUT
+    )
+    time_ms = int(hours*3.6e6+minutes*60000+seconds*1000)
+    with open(TIMEDATA_URI, "w") as f:
+        f.write(str(time_ms))
+    arduino.write(f"{hours}:{minutes}:{seconds}\n")
+
