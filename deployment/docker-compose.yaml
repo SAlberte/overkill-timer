@@ -37,10 +37,10 @@ services:
       - redis
       - celery
 
-#  ui:
-#    build:
-#      context: ../src
-#      dockerfile: ./ui/deployment/Dockerfile
-#    ports:
-#      - '3000:3000'
+  ui:
+    build:
+      context: ../src
+      dockerfile: ./ui/deployment/Dockerfile
+    ports:
+      - '3000:3000'
 
