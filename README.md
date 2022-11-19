@@ -11,4 +11,8 @@ web application, which in turn is controlled from the frontend.
     <img src="imgs/timer.png">
 </p>
 
-##
+## Design
+
+| User interface in browser | Display with Arduino  |
+|:-------------------------:|:---------------------:|
+|     ![](imgs/ui.png)      | ![](imgs/arduino.png) |
