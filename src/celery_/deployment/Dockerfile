@@ -13,4 +13,5 @@ COPY ./arduino_utils $DEST/arduino_utils
 
 RUN pip install -r $DEST/deployment/requirements.txt
 ENV PYTHONPATH "${PYTHONPATH}:${DEST}"
+
 ENTRYPOINT celery -A celery_worker.celery_app worker --loglevel=info
