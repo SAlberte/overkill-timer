@@ -1,10 +1,28 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 import classes from './TimerButton.module.css'
 
 export default function TimerButton() {
 
     const [text, setText] = useState("START")
+
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            fetch("http://localhost:8000/timer/status", {
+            method: "GET",
+          headers: {
+            "Content-Type": "application/json"}
+        })
+        .then(response => response.json())
+        .then((response) => {
+            setText(response.status === "STARTED" ? "STOP" : "START");
+        })
+        .catch((err) => {
+          console.log(err)});
+        }, 1000);
+        return () => clearInterval(interval);
+    }, []);
 
     async function buttonClicked()
     {
@@ -17,7 +35,6 @@ export default function TimerButton() {
         })
         .then(response => response.json())
         .then((response) => {
-            setText((text) => text === "START" ? "STOP" : "START")
         })
         .catch((err) => {
           console.log(err)});

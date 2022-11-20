@@ -34,3 +34,8 @@ def timer_settings(timer_time: TimerTime):
         minutes=timer_time.minutes,
         seconds=timer_time.seconds,
     )
+
+
+@app.get("/timer/status")
+def timer_status():
+    return timer_controller.get_status()

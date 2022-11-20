@@ -1,6 +1,7 @@
 from celery_worker import arduino_timer_task, arduino_set_time_task
 import celery.result
 from models.timer_command import Command
+from models.timer_status import Status, TimerStatus
 from celery import signature
 
 
@@ -22,3 +23,9 @@ class TimerController:
         arduino_set_time_task.delay(
             hours=hours, minutes=minutes, seconds=seconds
         )
+
+    def get_status(self):
+        if self.task is None or self.task.status != "PENDING":
+            return TimerStatus(status=Status.STOPPED.value)
+        else:
+            return TimerStatus(status=Status.STARTED.value)
