@@ -5,7 +5,6 @@ from celery import signature
 
 
 class TimerController:
-
     def __init__(self):
         self.sig: signature = arduino_timer_task.s()
         self.task: None | celery.result.AsyncResult = None
@@ -22,8 +21,6 @@ class TimerController:
     def set_time(self, hours: int, minutes: int, seconds: int):
         if self.task is not None and self.task.status == "PENDING":
             self.task.revoke(terminate=True)
-        arduino_set_time_task.delay(hours=hours,
-                                    minutes=minutes,
-                                    seconds=seconds)
-
-
+        arduino_set_time_task.delay(
+            hours=hours, minutes=minutes, seconds=seconds
+        )

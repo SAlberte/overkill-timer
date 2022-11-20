@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Body
+from fastapi import FastAPI
 from controllers.timer_controller import TimerController
 from models.timer_command import TimerCommand
 from models.timer_time import TimerTime
@@ -28,9 +28,9 @@ def timer(timer_command: TimerCommand):
 
 
 @app.post("/timer/time")
-def timer(timer_time: TimerTime):
-    timer_controller.set_time(hours=timer_time.hours,
-                              minutes=timer_time.minutes,
-                              seconds=timer_time.seconds)
-
-
+def timer_settings(timer_time: TimerTime):
+    timer_controller.set_time(
+        hours=timer_time.hours,
+        minutes=timer_time.minutes,
+        seconds=timer_time.seconds,
+    )
