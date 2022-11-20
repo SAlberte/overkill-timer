@@ -2,4 +2,4 @@
 
 set -ex
 
-docker-compose -f deployment/docker-compose.yaml up --build
+docker-compose -f deployment/docker-compose.yaml up
