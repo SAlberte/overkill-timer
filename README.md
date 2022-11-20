@@ -16,3 +16,13 @@ web application, which in turn is controlled from the frontend.
 | User interface in browser | Display with Arduino  |
 |:-------------------------:|:---------------------:|
 |     ![](imgs/ui.png)      | ![](imgs/arduino.png) |
+
+## Usage
+
+*Notes: works only on Linux*
+
+Run commands from main directory in following order:
+
+    make
+    make build
+    make run
