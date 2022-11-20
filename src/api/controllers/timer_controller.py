@@ -13,9 +13,7 @@ class TimerController:
         if command == Command.STOP.value and self.task is not None:
             self.task.revoke(terminate=True)
         elif command == Command.START.value:
-            if self.task is None:
-                self.task = self.sig.apply_async()
-            elif self.task.status != "PENDING":
+            if self.task is None or self.task.status != "PENDING":
                 self.task = self.sig.apply_async()
 
     def set_time(self, hours: int, minutes: int, seconds: int):
