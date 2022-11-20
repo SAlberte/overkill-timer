@@ -1,19 +1,33 @@
 from celery import Celery
 from arduino_utils.arduino_controller import ArduinoController
 import time
+import os
+
+TIMEDATA_URI = os.getenv("TIMEDATA_URI")
+ARDUINO_BAUDRATE = os.getenv("ARDUINO_BAUDRATE")
+ARDUINO_PORT = os.getenv("ARDUINO_PORT")
+ARDUINO_TIMEOUT = os.getenv("ARDUINO_TIMEOUT")
+WORKER_NAME = os.getenv("WORKER_NAME")
+BROKER_URL_ = os.getenv("BROKER_URL_")
+
+ALL_ENVS: [str]=[TIMEDATA_URI,
+          ARDUINO_BAUDRATE,
+          ARDUINO_PORT,
+          ARDUINO_TIMEOUT,
+          WORKER_NAME,
+          BROKER_URL_]
+
+print(ALL_ENVS)
+
+if None in ALL_ENVS:
+    raise RuntimeError("Some env variables are not defined.")
 
 
 celery_app = Celery(
-    "celery_worker",
-    broker="redis://redis:6379/0",
-    backend="redis://redis:6379/0"
+    WORKER_NAME,
+    broker=BROKER_URL_,
+    backend=BROKER_URL_
 )
-
-
-TIMEDATA_URI = "/data/time.txt"
-ARDUINO_BAUDRATE = 9600
-ARDUINO_PORT = "/dev/ttyACM0"
-ARDUINO_TIMEOUT = 0.1
 
 
 def format_time(time_ms: int) -> [int, int, int]:
@@ -32,9 +46,9 @@ def format_time(time_ms: int) -> [int, int, int]:
 @celery_app.task
 def arduino_timer_task():
     arduino = ArduinoController(
-        baudrate=ARDUINO_BAUDRATE,
+        baudrate=int(ARDUINO_BAUDRATE),
         port=ARDUINO_PORT,
-        timeout=ARDUINO_TIMEOUT
+        timeout=float(ARDUINO_TIMEOUT)
     )
     min_timer_time = 1000
     loop_time = 1
@@ -57,9 +71,9 @@ def arduino_timer_task():
 @celery_app.task
 def arduino_set_time_task(hours, minutes, seconds):
     arduino = ArduinoController(
-        baudrate=ARDUINO_BAUDRATE,
+        baudrate=int(ARDUINO_BAUDRATE),
         port=ARDUINO_PORT,
-        timeout=ARDUINO_TIMEOUT
+        timeout=float(ARDUINO_TIMEOUT)
     )
     time_ms = int(hours*3.6e6+minutes*60000+seconds*1000)
     with open(TIMEDATA_URI, "w") as f:
