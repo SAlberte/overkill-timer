@@ -1,7 +1,8 @@
 from celery_worker import arduino_timer_task, arduino_set_time_task
 import celery.result
 from models.timer_command import Command
-from celery import signature,
+from celery import signature
+
 
 class TimerController:
 

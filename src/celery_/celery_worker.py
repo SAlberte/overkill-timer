@@ -1,19 +1,31 @@
 from celery import Celery
 from arduino_utils.arduino_controller import ArduinoController
 import time
+import os
+
+TIMEDATA_URI = os.getenv("TIMEDATA_URI")
+ARDUINO_BAUDRATE = os.getenv("ARDUINO_BAUDRATE")
+ARDUINO_PORT = os.getenv("ARDUINO_PORT")
+ARDUINO_TIMEOUT = os.getenv("ARDUINO_TIMEOUT")
+WORKER_NAME = os.getenv("WORKER_NAME")
+BROKER_URL = os.getenv("BROKER_URL")
+
+ALL_ENVS=[TIMEDATA_URI,
+          ARDUINO_BAUDRATE,
+          ARDUINO_PORT,
+          ARDUINO_TIMEOUT,
+          WORKER_NAME,
+          BROKER_URL]
+
+if None in ALL_ENVS:
+    raise RuntimeError("Some env variables are not defined.")
 
 
 celery_app = Celery(
-    "celery_worker",
-    broker="redis://redis:6379/0",
-    backend="redis://redis:6379/0"
+    WORKER_NAME,
+    broker=BROKER_URL,
+    backend=BROKER_URL
 )
-
-
-TIMEDATA_URI = "/data/time.txt"
-ARDUINO_BAUDRATE = 9600
-ARDUINO_PORT = "/dev/ttyACM0"
-ARDUINO_TIMEOUT = 0.1
 
 
 def format_time(time_ms: int) -> [int, int, int]:
